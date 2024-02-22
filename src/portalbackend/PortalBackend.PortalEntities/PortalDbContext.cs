@@ -23,6 +23,7 @@ using Org.Eclipse.TractusX.Portal.Backend.PortalBackend.PortalEntities.Auditing;
 using Org.Eclipse.TractusX.Portal.Backend.PortalBackend.PortalEntities.Entities;
 using Org.Eclipse.TractusX.Portal.Backend.PortalBackend.PortalEntities.Enums;
 using Org.Eclipse.TractusX.Portal.Backend.PortalBackend.PortalEntities.Views;
+using PortalBackend.PortalEntities.EntitiesIsoPay;
 using System.Collections.Immutable;
 
 namespace Org.Eclipse.TractusX.Portal.Backend.PortalBackend.PortalEntities;
@@ -198,6 +199,18 @@ public class PortalDbContext : DbContext
     public virtual DbSet<CompanyRoleCollectionRolesView> CompanyRoleCollectionRolesView { get; set; } = default!;
     public virtual DbSet<AgreementStatus> AgreementStatuses { get; set; } = default!;
     public virtual DbSet<AgreementView> AgreementView { get; set; } = default!;
+
+
+    /// <summary>
+    ///  IsoPay
+    /// </summary>
+    public virtual DbSet<Account> Account { get; set; } = default!;
+    public virtual DbSet<TransactionType> TransactionTypes { get; set; } = default!;
+    public virtual DbSet<AccountHead> AccountHead { get; set; } = default!;
+    public virtual DbSet<Currency> Currency { get; set; } = default!;
+    public virtual DbSet<Transaction> Transaction { get; set; } = default!;
+
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

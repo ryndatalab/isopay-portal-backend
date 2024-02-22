@@ -1,0 +1,87 @@
+﻿@page "/UserRole"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization;
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@attribute [Authorize]
+@inject HttpClient Http 
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+@inject AuthenticationStateProvider GetAuthenticationStateAsync
+
+@using System.Text.Json
+@using System.Security.Claims
+
+<PageTitle>User Role</PageTitle>
+
+<h1>User Role</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+ 
+<AuthorizeView>
+    <Authorized>
+        Hello, @context.User.Identity?.Name!
+       f @context.User.Identity!
+    </Authorized>
+    <NotAuthorized>
+        <a href="authentication/login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView> 
+
+
+
+@if (roles == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr> 
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in roles)
+            {
+                <tr>
+                    <td>@forecast</td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<string> roles;
+
+    protected override async Task OnInitializedAsync()
+    {
+ 
+
+        try
+        {
+            var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+            var user = authstate.User;
+            var name = user.Identity.Name;
+
+
+            if (user.Identity.IsAuthenticated)
+            {
+                foreach (var item in user.Claims)
+                {
+                    string props = item.Issuer;
+                    Console.WriteLine($"{item.Value} {item.ValueType} {props}");
+                }
+                Console.WriteLine($"{user.Identity.Name} is authenticated.");
+            }
+
+            roles = new List<string> { "admin", "viewer" };
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+}

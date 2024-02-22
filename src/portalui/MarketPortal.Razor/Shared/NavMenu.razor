@@ -1,0 +1,73 @@
+﻿@using MarketPortal.Razor.BusinessLogic
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Portal</a>
+        <p>Automobile dataspace</p>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+       @*  <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="UserRole">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> User Role data
+            </NavLink>
+        </div> *@
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="User">
+                <span class="oi oi-person" aria-hidden="true"></span> User Info
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Administration/Usecase">
+                <span class="oi oi-arrow-right" aria-hidden="true"></span>Use case
+            </NavLink>
+
+        </div>
+        @foreach (var menu in MenuData.GetMenuDatas())
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Administration/Usecase">
+                    <span class="oi oi-book" aria-hidden="true"></span> @menu.Menu
+                </NavLink>
+            </div>
+        }
+    </nav>
+</div>
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private bool expandMenu;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+        expandMenu = false;
+    }
+
+    private void ToggleSubmenu()
+    {
+        expandMenu = !expandMenu;
+    }
+}

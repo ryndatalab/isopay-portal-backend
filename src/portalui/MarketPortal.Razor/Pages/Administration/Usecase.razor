@@ -1,0 +1,61 @@
+﻿@page "/Administration/Usecase"
+@using MarketPortal.Razor.Services.Administration
+@using Newtonsoft.Json;
+@inject MarketPortal.Razor.Services.Administration.AdminAPI adminApi
+@inject HttpClient Http
+
+<h3>Usecase</h3>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me +</button>
+<p role="status">Current count: @currentCount </p>
+
+<table class="table ">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>UseCaseId</th>
+            <th>Shortname</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (UseCaseDatas != null)
+        {
+            foreach (var uc in UseCaseDatas)
+            {
+                <tr>
+                    <td>@uc.Name</td>
+                    <td>@uc.UseCaseId</td>
+                    <td>@uc.Shortname</td>
+                    <td><button @onclick="DeleteUsecase" class="btn btn-primary">Delete</button></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    private int currentCount = 101;
+    public ICollection<UseCaseData> UseCaseDatas { get; set; }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        // Http.DefaultRequestHeaders.Add("Access-Control-Allow-Origin", "*");
+        // UseCaseDatas =  await Http.GetFromJsonAsync<UseCaseData[]>("https://localhost:5001/api/administration/staticdata/usecases");
+        // Console.WriteLine(UseCaseDatas.Length);
+        //UseCaseDatas = await adminApi.UsecasesAsync().ConfigureAwait(false);
+    }
+    private async Task DeleteUsecase()
+    {
+        var x = await adminApi.RolesGETAsync("en").ConfigureAwait(false);
+        Console.WriteLine(x.Count);
+    }
+
+    private async Task IncrementCount()
+    {
+        currentCount++; 
+
+        UseCaseDatas = await adminApi.UsecasesAsync().ConfigureAwait(false);
+        Console.WriteLine(adminApi.BaseUrl);
+        // MarketPortal.Razor.Services.Administration.AdminAPI adminAPI = new Services.Administration.AdminAPI("https://xx.com", new HttpClient())
+    }
+}

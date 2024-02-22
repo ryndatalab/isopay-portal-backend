@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <AssemblyName>Account.Service</AssemblyName>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\framework\Framework.Models\Framework.Models.csproj" />
+    <ProjectReference Include="..\..\framework\Framework.Web\Framework.Web.csproj" />
+    <ProjectReference Include="..\..\framework\Framework.Swagger\Framework.Swagger.csproj" />
+  </ItemGroup>
+
+</Project>

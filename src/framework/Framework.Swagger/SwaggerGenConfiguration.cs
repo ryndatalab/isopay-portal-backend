@@ -44,7 +44,26 @@ public static class SwaggerGenConfiguration
             In = ParameterLocation.Header,
             Type = SecuritySchemeType.ApiKey,
             Scheme = "Bearer"
+          
         });
+        c.AddSecurityDefinition(
+               "oauth2",
+               new OpenApiSecurityScheme
+               {
+                   Type = SecuritySchemeType.OAuth2,
+                   Flows = new OpenApiOAuthFlows
+                   {
+                       AuthorizationCode = new OpenApiOAuthFlow
+                       {
+                           AuthorizationUrl = new Uri("http://localhost:8070/realms/isopay/protocol/openid-connect/auth"),
+                           TokenUrl = new Uri("http://localhost:8070/realms/isopay/protocol/openid-connect/token"),
+                           Scopes = new Dictionary<string, string> {
+                                { "combitimeapi", "Demo API" }
+                           }
+                       }
+                   }
+               });
+
         c.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
             {
